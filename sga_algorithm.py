@@ -1,31 +1,56 @@
 import numpy as np
 
 
-def train(x, t, m, k, mini_batch, lr):
+def train(x, t, m=500, mini_batch=200, iterations=1000, lr=0.01, tol=0.00001):
 
-    # create mini batch and get vector's X dimensions
+    # create mini batch and get vector's dimensions
     x, t = create_batch(x, t, mini_batch)
     n, d = x.shape
-    # random initialization of weights
-    w1 = np.random.randn(m, d)
-    w2 = np.random.randn(k, m)
-    print(x.shape)
-    # forward step
-    z = h(x.dot(w1.transpose()))
-    y = softmax(z.dot(w2.transpose()))
+    k = t.shape[1]
 
-    # calculate cost function
-    ew = 0
-    for n in range(n):
-        for k in range(k):
-            ew += t[n][k] * np.log(y[n][k])
-    ew -= lr * np.sum(np.square(w2)) / 2
+    # random initialization of weights and bias
+    w1 = np.random.randn(d, m)
+    w2 = np.random.randn(m, k)
+    b1 = np.random.randn(m)
+    b2 = np.random.randn(k)
 
-    # backpropagation
-    temp = (t-y).transpose()
-    w2 += lr*(temp.dot(z) - lr*w2)
+    costs = []
+    e_wold = -np.inf
 
-    # w1 += lr*(temp.dot(w2.transpose()).dot(x).dot(h_derivative(x.dot(w1.transpose()))))
+    for i in range(iterations):
+        x, t = create_batch(x, t, mini_batch)
+
+        # forward step
+        z = h(x.dot(w1) + b1)
+        y = softmax(z.dot(w2) + b2)
+
+        # calculate cost function
+        ew = 0
+        for n in range(n):
+            for k in range(k):
+                ew += t[n][k] * np.log(y[n][k])
+        ew -= lr * np.sum(np.square(w2)) / 2
+
+        if np.abs(ew - e_wold) >= tol:
+
+            # backpropagation
+            delta2 = t - y
+            delta1 = delta2.dot(w2.T) * z * (1 - z)
+
+            w2 += lr * (z.T.dot(delta2) - lr * w2)
+            b2 += lr * delta2.sum(axis=0)
+
+            w1 += lr * (x.T.dot(delta1) - lr * w1)
+            b1 += lr * delta1.sum(axis=0)
+
+            # save loss function values across training iterations
+            if i % 50 == 0:
+                print('Loss function value: ', ew)
+                costs.append(ew)
+        else:
+            break
+
+    return costs, w1, w2, b1, b2
 
 
 def softmax(x, ax=1):
@@ -36,7 +61,7 @@ def softmax(x, ax=1):
 
 
 def h(z):
-    return np.log(1 + np.exp(z))
+    return 1 / (1 + np.exp(-z))
 
 
 def h_derivative(z):

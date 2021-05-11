@@ -5,4 +5,5 @@ import numpy as np
 
 if __name__ == '__main__':
     X_train, X_test, y_train, y_test = load_data()
-    train(X_train, y_train, 20, 10, 200, 0.01)
+    costs, w1, w2, b1, b2 = train(X_train, y_train)
+    print(costs)

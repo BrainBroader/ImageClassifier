@@ -19,9 +19,6 @@ def load_data():
     train_data = train_data.astype(float) / 255
     test_data = test_data.astype(float) / 255
 
-    #train_data = np.hstack((np.ones((train_data.shape[0], 1)), train_data))
-    #test_data = np.hstack((np.ones((test_data.shape[0], 1)), test_data))
-
     return train_data, test_data, y_train, y_test
 
 
