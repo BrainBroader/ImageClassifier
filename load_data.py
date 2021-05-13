@@ -2,27 +2,15 @@ import numpy as np
 import pandas as pd
 
 
-def load_data():
+def load_data(directory):
     """
-    Load the MNIST dataset. Reads the training and testing files and create matrices.
+    Load the MNIST dataset. Reads the training or testing files and create matrices.
     :Expected return:
-    train_data:the matrix with the training data
+    data:the matrix with the training data or test data
     test_data: the matrix with the data that will be used for testing
     y_train: the matrix consisting of one
-                        hot vectors on each row(ground truth for training)
-    y_test: the matrix consisting of one
-                        hot vectors on each row(ground truth for testing)
+                        hot vectors on each row
     """
-    train_data, y_train = load('ml/train%d.txt')
-    test_data, y_test = load('ml/test%d.txt')
-
-    train_data = train_data.astype(float) / 255
-    test_data = test_data.astype(float) / 255
-
-    return train_data, test_data, y_train, y_test
-
-
-def load(directory):
 
     df = None
 
@@ -44,5 +32,7 @@ def load(directory):
 
     data = df.to_numpy()
     y = np.array(y)
+
+    data = data.astype(float) / 255
 
     return data, y
