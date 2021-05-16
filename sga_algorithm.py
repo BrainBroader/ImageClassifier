@@ -3,7 +3,7 @@ import numpy as np
 
 class SgaAlgorithm:
 
-    def __init__(self, function="tanh", lamda=1e-4, lr=0.01, m=300, mini_batch=200, iterations=500, tol=1e-6):
+    def __init__(self, function="tanh", lamda=0.001, lr=0.001, m=200, mini_batch=100, iterations=500, tol=1e-6):
         self.function = function
         self.m = m
         self.mini_batch = mini_batch
@@ -13,6 +13,15 @@ class SgaAlgorithm:
         self.lr = lr
 
     def train(self, x, t):
+        """
+        It trains the model, initializes the parameters of the model and the for a number of iterations
+        calls the method calculate_costs and upgrades the value of the parameters.
+
+        :param x: 2D np array that contains the train dataset
+        :param t: 2D np array that shows the category of each image
+
+        :return: the parameter's values of the trained model
+        """
 
         costs = []
         e_wold = -np.inf
@@ -34,8 +43,8 @@ class SgaAlgorithm:
 
             costs.append(ew)
             # Show the current cost function on screen
-            # if i % 50 == 0:
-            #     print('Iteration : %d, Cost function :%f' % (i, ew))
+            if i % 100 == 0:
+                print('Iteration : %d, Cost function :%f' % (i, ew))
 
             # Break if you achieve the desired accuracy in the cost function
             if np.abs(ew - e_wold) < self.tol:
@@ -51,6 +60,17 @@ class SgaAlgorithm:
         return weights
 
     def calculate_cost(self, x, t, weights):
+
+        """
+        Performs forward, back propagation and calculates the cost function.
+
+        :param x: 2D np array that contains the train dataset
+        :param t: 2D np array that shows the category of each image
+        :param weights: the parameters of the model
+
+        :return: ew: the value of the cost
+                 gradients: dictionary that contains the gradients of each parameter
+        """
 
         gradients = {}
         # forward step
@@ -90,6 +110,15 @@ class SgaAlgorithm:
         return t_test
 
     def create_batch(self, x, y):
+        """
+            Chooses randomly a number of indices/train examples without replace
+            and create a new batch of train examples.
+
+        :param x: 2D np array that contains the train dataset
+        :param y: 2D np array that shows the category of each image
+        :return: x_mini: mini batch of array x
+                 y_mini: mini batch of array y
+        """
 
         random_indices = np.random.choice(x.shape[0], size=self.mini_batch, replace=False)
         x_mini = x[random_indices, :]
@@ -98,6 +127,7 @@ class SgaAlgorithm:
         return x_mini, y_mini
 
     def gradient_check(self, x, t, weights):
+
         epsilon = 1e-7
 
         _list = np.random.randint(x.shape[0], size=5)

@@ -8,9 +8,7 @@ def load_mnist(directory):
     Load the MNIST dataset. Reads the training or testing files and create matrices.
     :Expected return:
     data:the matrix with the training data or test data
-    test_data: the matrix with the data that will be used for testing
-    y_train: the matrix consisting of one
-                        hot vectors on each row
+
     """
 
     df = None
@@ -40,6 +38,13 @@ def load_mnist(directory):
 
 
 def load_cifar_10(directory):
+    """
+    Extracts the data from dictionaries and arange them into 2D np arrays.
+    Turns the target vectors into one hot vectors.
+
+    :param directory: the directory of the dataset
+    :return: return the matrices of train and test data plus a dictionary with the name of each category.
+    """
 
     x_train = []
     y_train = []
@@ -56,8 +61,6 @@ def load_cifar_10(directory):
 
     train_data = np.array(x_train)
     test_data = np.array(x_test)
-    print(train_data.shape)
-    print(test_data.shape)
 
     class_names = open_cifar_10(directory + "/batches.meta")
 
@@ -69,6 +72,9 @@ def load_cifar_10(directory):
     test_target = np.zeros([len(y_test), 10])
     for i in range(test_target.shape[0]):
         train_target[i, y_test[i]] = 1
+
+    train_data = train_data.astype(np.float64) / 255
+    test_data = test_data.astype(np.float64) / 255
 
     return train_data, train_target, test_data, test_target, class_names
 
