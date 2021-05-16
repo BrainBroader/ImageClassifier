@@ -1,3 +1,4 @@
+import sys
 from sklearn.model_selection import train_test_split
 from load_data import load_cifar_10
 from sga_algorithm import SgaAlgorithm
@@ -7,7 +8,7 @@ import numpy as np
 def main():
 
     # Load data
-    path = "cifar-10-batches-py"
+    path = sys.argv[1] + "\\cifar-10-batches-py"
 
     print(f'[INFO] - Loading training data from {path}')
     x_train, y_train, x_test, y_test, class_names = load_cifar_10(path)

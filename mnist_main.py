@@ -1,3 +1,4 @@
+import sys
 from sklearn.model_selection import train_test_split
 from load_data import load_mnist
 from sga_algorithm import SgaAlgorithm
@@ -5,8 +6,8 @@ import numpy as np
 
 
 def main():
-    train_path = 'ml/train%d.txt'  # sys.argv[1] + '\\train%d.txt'
-    test_path = 'ml/test%d.txt'  # sys.argv[1] + '\\test%d.txt'
+    train_path = sys.argv[1] + '\\train%d.txt'
+    test_path = sys.argv[1] + '\\test%d.txt'
 
     # load training data
     print(f'[INFO] - Loading training data from {train_path}')
