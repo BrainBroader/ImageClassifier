@@ -11,6 +11,7 @@ Classifying images using a MLP implemented from scratch.
 ## Table of Contents
 * [Description](#description)
 * [Datasets](#datasets)
+* [Technologies](#technologies)
 * [Prerequisites](#prerequisities)
 * [Execution Instructions](#execution-instructions)
 
