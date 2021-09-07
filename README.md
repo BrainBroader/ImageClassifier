@@ -34,6 +34,8 @@ The technologies used that are worth mentioning, are:
 
    * Python
    * Numpy
+   * Pandas
+   * Scikit-Learn
 
 
 ### Prerequisities
