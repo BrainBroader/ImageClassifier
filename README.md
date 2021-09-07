@@ -11,6 +11,7 @@ Classifying images using a MLP implemented from scratch.
 ## Table of Contents
 * [Description](#description)
 * [Datasets](#datasets)
+* [Prerequisites](#prerequisities)
 * [Execution Instructions](#execution-instructions)
 
 ### Description 
@@ -27,6 +28,26 @@ Is a dataset that contains 32x32 colored images of different objects or animals.
 
 Download: https://www.cs.toronto.edu/~kriz/cifar.html
 
+### Technologies
+
+The technologies used that are worth mentioning, are:
+
+    Python,
+    Numpy
+
+
+### Prerequisities
+
+Before you execute the given program, you need to:
+
+    download and unzip the dataset you want,
+    check if you have installed the libraries mention in Section "Technologies".
+
+If you haven't previously installed the libraries mentioned above, you can use the provided requirements.txt file, by running the following command:
+
+cd path-to-project
+pip install -r requirements.txt
+ 
 ### Execution Instructions
 To execute the program the following command is used:
 ```
