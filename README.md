@@ -32,16 +32,16 @@ Download: https://www.cs.toronto.edu/~kriz/cifar.html
 
 The technologies used that are worth mentioning, are:
 
-    Python,
-    Numpy
+   * Python
+   * Numpy
 
 
 ### Prerequisities
 
 Before you execute the given program, you need to:
 
-    download and unzip the dataset you want,
-    check if you have installed the libraries mention in Section "Technologies".
+    1.download and unzip the dataset you want,
+    2.check if you have installed the libraries mention in Section "Technologies".
 
 If you haven't previously installed the libraries mentioned above, you can use the provided requirements.txt file, by running the following command:
 
